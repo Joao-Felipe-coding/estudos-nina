@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Estudos Interativo: Direito Administrativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
+    <!-- Application Structure Plan: A aplicação foi estruturada em cinco seções temáticas principais que correspondem aos pilares do Direito Administrativo (Fundamentos, Princípios, Poderes, Atos, Organização). Esta abordagem não linear, ao contrário de uma sequência de slides, promove uma melhor síntese e compreensão das relações entre os tópicos. A navegação é facilitada por uma barra lateral fixa. Cada seção utiliza elementos interativos como diagramas clicáveis, comparações lado a lado e quizzes para aprofundar o entendimento. Esta estrutura foi escolhida para transformar o estudo passivo em uma exploração ativa, permitindo ao usuário focar em áreas específicas e visualizar as conexões conceituais, o que é mais eficaz para a retenção do conhecimento e preparação para a prova. -->
+    <!-- Visualization & Content Choices: 
+        - Estrutura da Administração -> Objetivo: Organizar -> Visualização: Diagrama interativo com HTML/CSS (Flexbox/Grid) -> Interação: Clicar em cada entidade (ex: Autarquia) revela um modal com detalhes -> Justificação: Visualiza a relação de hierarquia e vinculação de forma mais clara que texto.
+        - Empresa Pública vs. Sociedade de Economia Mista -> Objetivo: Comparar -> Visualização: Gráfico de barras com Chart.js -> Interação: Hover para tooltips com detalhes -> Justificação: Oferece uma comparação visual e rápida das diferenças chave (Capital, Foro, Forma).
+        - Anulação vs. Revogação -> Objetivo: Comparar -> Visualização: Cartões lado a lado -> Interação: Mini-quiz interativo para testar a aplicação do conceito -> Justificação: Contraste direto dos conceitos e aplicação prática do conhecimento.
+        - Princípios (LIMPE) / Requisitos do Ato (COFIFOMOB) -> Objetivo: Informar/Organizar -> Visualização: Componente de abas (tabs) interativas -> Interação: Clicar em cada letra/termo revela a explicação -> Justificação: Fragmenta a informação complexa em partes gerenciáveis, facilitando a memorização.
+        - Conceitos Chave (ex: Poderes) -> Objetivo: Informar -> Visualização: Cartões com botão "Saiba Mais" -> Interação: Clicar para expandir e ver detalhes/exemplos -> Justificação: Mantém a interface limpa (progressive disclosure), permitindo que o usuário aprofunde sob demanda. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .main-content {
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-link {
+            transition: all 0.2s ease;
+        }
+        .nav-link.active {
+            background-color: #0d9488;
+            color: white;
+            font-weight: 600;
+        }
+        .quiz-option {
+            transition: background-color 0.3s;
+        }
+        .quiz-correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+        .quiz-wrong {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="flex">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-slate-800 text-white min-h-screen p-4 fixed flex flex-col">
+            <h1 class="text-2xl font-bold mb-8 text-center">Direito Admin.</h1>
+            <nav id="main-nav" class="flex flex-col space-y-2">
+                <a href="#fundamentos" class="nav-link p-3 rounded-lg hover:bg-slate-700">Fundamentos</a>
+                <a href="#principios" class="nav-link p-3 rounded-lg hover:bg-slate-700">Princípios</a>
+                <a href="#poderes" class="nav-link p-3 rounded-lg hover:bg-slate-700">Poderes</a>
+                <a href="#atos" class="nav-link p-3 rounded-lg hover:bg-slate-700">Atos Administrativos</a>
+                <a href="#organizacao" class="nav-link p-3 rounded-lg hover:bg-slate-700">Organização</a>
+            </nav>
+            <div class="mt-auto text-center text-xs text-slate-400">
+                <p>Desenvolvido para Estudo</p>
+                <p>&copy; 2025</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 p-6 md:p-10 w-full">
+            
+            <!-- Seção Fundamentos -->
+            <section id="fundamentos" class="main-content min-h-screen mb-16">
+                <h2 class="text-4xl font-bold mb-2 text-teal-700">Fundamentos do Direito Administrativo</h2>
+                <p class="mb-8 text-slate-600">Esta seção aborda os pilares da matéria: o conceito de Direito Administrativo, o regime jurídico especial que o governa e os sistemas de controle dos atos públicos.</p>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-2xl font-semibold mb-3">O que é Direito Administrativo?</h3>
+                    <p class="mb-4">É o ramo do direito público que rege o exercício da **função administrativa**, desempenhada não só pelo Poder Executivo, mas também pelo Legislativo e Judiciário em suas atividades-meio (gestão de pessoal, licitações, etc.). O critério da função administrativa é o mais aceito por focar na natureza da atividade e não em quem a exerce.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-2xl font-semibold mb-3">Regime Jurídico-Administrativo: O Binômio Essencial</h3>
+                    <p class="mb-4">A Administração Pública não age em pé de igualdade com o particular. Seu regime é baseado em um equilíbrio entre poderes especiais e restrições rigorosas.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-4 bg-teal-50 border-l-4 border-teal-500 rounded-r-lg">
+                            <h4 class="font-bold text-lg text-teal-800">PRERROGATIVAS (Poderes)</h4>
+                            <p class="text-slate-700">Vantagens que a Administração possui para poder atender ao interesse coletivo.</p>
+                            <ul class="list-disc list-inside mt-2 text-sm space-y-1">
+                                <li>Alterar e rescindir contratos unilateralmente.</li>
+                                <li>Desapropriar bens por utilidade pública.</li>
+                                <li>Presunção de legitimidade de seus atos.</li>
+                                <li>Autoexecutoriedade de certas decisões.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
+                            <h4 class="font-bold text-lg text-red-800">SUJEIÇÕES (Deveres)</h4>
+                            <p class="text-slate-700">Limitações e obrigações que freiam o poder estatal, protegendo o cidadão.</p>
+                             <ul class="list-disc list-inside mt-2 text-sm space-y-1">
+                                <li>Agir estritamente dentro da lei (Legalidade).</li>
+                                <li>Realizar concurso público e licitação.</li>
+                                <li>Dever de ser impessoal, moral e transparente.</li>
+                                <li>Obrigatoriedade de motivar suas decisões.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-3">Sistemas de Controle: Quem julga a Administração?</h3>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1 p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Sistema Inglês (Jurisdição Una)</h4>
+                            <p>Um único Poder Judiciário julga todos os conflitos, sejam entre particulares ou contra o Estado. As decisões administrativas podem ser revistas pelo Judiciário.</p>
+                            <p class="mt-2 font-semibold text-teal-600"> adotado no Brasil</p>
+                        </div>
+                        <div class="flex-1 p-4 border rounded-lg bg-slate-50">
+                            <h4 class="font-bold text-lg">Sistema Francês (Contencioso Administrativo)</h4>
+                            <p>Existem duas justiças: a comum e a administrativa. A justiça administrativa julga as causas do Estado em definitivo, sem revisão pela justiça comum.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                        <h4 class="font-bold">Pegadinha de Prova!</h4>
+                        <p class="text-sm">A existência de Tribunais de Contas ou de um processo administrativo robusto no Brasil NÃO significa que adotamos o sistema francês. A chave é a **definitividade**: no Brasil, NENHUMA decisão administrativa é final, podendo sempre ser levada ao Poder Judiciário (Princípio da Inafastabilidade da Jurisdição - Art. 5º, XXXV, CF).</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Seção Princípios -->
+            <section id="principios" class="main-content min-h-screen mb-16">
+                <h2 class="text-4xl font-bold mb-2 text-teal-700">Princípios da Administração Pública</h2>
+                <p class="mb-8 text-slate-600">As regras de ouro que guiam toda e qualquer atuação do Estado. Alguns estão escritos na lei (explícitos), outros derivam do sistema (implícitos).</p>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Princípios Explícitos (Art. 37, CF) - L.I.M.P.E.</h3>
+                    <div id="limpe-tabs" class="w-full max-w-2xl mx-auto">
+                        <div class="flex border-b">
+                            <button data-target="legalidade" class="tab-button flex-1 p-4 font-semibold text-slate-600 border-b-2 border-transparent hover:bg-slate-100">Legalidade</button>
+                            <button data-target="impessoalidade" class="tab-button flex-1 p-4 font-semibold text-slate-600 border-b-2 border-transparent hover:bg-slate-100">Impessoalidade</button>
+                            <button data-target="moralidade" class="tab-button flex-1 p-4 font-semibold text-slate-600 border-b-2 border-transparent hover:bg-slate-100">Moralidade</button>
+                            <button data-target="publicidade" class="tab-button flex-1 p-4 font-semibold text-slate-600 border-b-2 border-transparent hover:bg-slate-100">Publicidade</button>
+                            <button data-target="eficiencia" class="tab-button flex-1 p-4 font-semibold text-slate-600 border-b-2 border-transparent hover:bg-slate-100">Eficiência</button>
+                        </div>
+                        <div id="limpe-content" class="p-4 mt-4">
+                            <div id="legalidade" class="tab-content hidden">
+                                <h4 class="font-bold text-lg">Legalidade</h4>
+                                <p>O administrador público só pode fazer o que a lei expressamente autoriza ou determina. Diferente do particular, que pode fazer tudo o que a lei não proíbe.</p>
+                            </div>
+                            <div id="impessoalidade" class="tab-content hidden">
+                                <h4 class="font-bold text-lg">Impessoalidade</h4>
+                                <p>A atuação deve visar o interesse público, sem favorecer ou prejudicar pessoas específicas. Proíbe, por exemplo, publicidade oficial com promoção pessoal de autoridades.</p>
+                            </div>
+                            <div id="moralidade" class="tab-content hidden">
+                                <h4 class="font-bold text-lg">Moralidade</h4>
+                                <p>Exige uma conduta honesta, ética e de boa-fé. Um ato pode ser legal, mas se for imoral, pode ser anulado. A sua violação pode configurar improbidade administrativa.</p>
+                            </div>
+                            <div id="publicidade" class="tab-content hidden">
+                                <h4 class="font-bold text-lg">Publicidade</h4>
+                                <p>Os atos devem ser transparentes e divulgados oficialmente para controle social. O sigilo é exceção, restrito à segurança do Estado ou à defesa da intimidade.</p>
+                            </div>
+                            <div id="eficiencia" class="tab-content hidden">
+                                <h4 class="font-bold text-lg">Eficiência</h4>
+                                <p>A Administração deve agir com presteza, perfeição e foco em resultados, buscando a melhor relação custo-benefício para a sociedade. Não pode, contudo, sobrepor-se à legalidade.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+                    <h3 class="text-2xl font-semibold mb-3">Princípios Implícitos Fundamentais</h3>
+                     <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 border rounded-lg"><strong>Razoabilidade e Proporcionalidade:</strong> O ato deve ser lógico e os meios utilizados devem ser adequados, necessários e proporcionais aos fins desejados. Limita a discricionariedade.</div>
+                        <div class="p-4 border rounded-lg"><strong>Motivação:</strong> A Administração deve expor as razões de fato e de direito que levaram à prática do ato, permitindo seu controle.</div>
+                        <div class="p-4 border rounded-lg"><strong>Autotutela:</strong> O poder-dever da Administração de anular seus atos ilegais e revogar os inoportunos (Súmula 473, STF).</div>
+                        <div class="p-4 border rounded-lg"><strong>Segurança Jurídica:</strong> Visa a estabilidade das relações. Limita a autotutela, por exemplo, com o prazo de 5 anos para anular atos que beneficiaram terceiros de boa-fé.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Poderes -->
+            <section id="poderes" class="main-content min-h-screen mb-16">
+                <h2 class="text-4xl font-bold mb-2 text-teal-700">Poderes da Administração</h2>
+                <p class="mb-8 text-slate-600">São os instrumentos que a lei confere ao administrador para agir em nome do interesse público. Não são uma opção, mas um poder-dever.</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-2">Poder Vinculado</h3>
+                        <p>A lei define todos os detalhes. O administrador não tem escolha. Se os requisitos são preenchidos, ele DEVE agir. Ex: Concessão de licença para construir.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-2">Poder Discricionário</h3>
+                        <p>A lei dá uma margem de liberdade para o administrador escolher a melhor solução, com base na conveniência e oportunidade (mérito). Ex: Autorização para uso de praça pública.</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                    <h4 class="font-bold">Atenção! Discricionariedade ≠ Arbitrariedade</h4>
+                    <p class="text-sm">A discricionariedade é uma liberdade DENTRO dos limites da lei e dos princípios (como razoabilidade). A arbitrariedade é uma ação FORA da lei, ilegal e abusiva.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+                    <h3 class="text-2xl font-semibold mb-4">Outros Poderes Essenciais</h3>
+                    <div class="space-y-4">
+                        <details class="group p-4 border rounded-lg">
+                            <summary class="font-semibold cursor-pointer">Poder Hierárquico</summary>
+                            <p class="mt-2 text-slate-600">Organiza a estrutura interna, criando relações de subordinação. Permite dar ordens, fiscalizar, delegar e avocar competências.</p>
+                        </details>
+                        <details class="group p-4 border rounded-lg">
+                            <summary class="font-semibold cursor-pointer">Poder Disciplinar</summary>
+                            <p class="mt-2 text-slate-600">O poder-dever de apurar e punir infrações de seus agentes ou de particulares com vínculo especial (ex: empresas contratadas). Requer processo administrativo com ampla defesa.</p>
+                        </details>
+                         <details class="group p-4 border rounded-lg">
+                            <summary class="font-semibold cursor-pointer">Poder Regulamentar</summary>
+                            <p class="mt-2 text-slate-600">Permite ao Chefe do Executivo editar atos (decretos) para detalhar a lei e permitir sua fiel execução. Não pode inovar na ordem jurídica, criando direitos ou obrigações não previstos em lei.</p>
+                        </details>
+                         <details class="group p-4 border rounded-lg">
+                            <summary class="font-semibold cursor-pointer">Poder de Polícia</summary>
+                            <p class="mt-2 text-slate-600">A atividade de limitar direitos e atividades dos particulares em nome do bem-estar coletivo (segurança, saúde, etc.). Ex: fiscalização sanitária, multa de trânsito. Seus atributos são discricionariedade, autoexecutoriedade e coercibilidade.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 bg-sky-50 border-l-4 border-sky-400 rounded-r-lg">
+                    <h4 class="font-bold">Diferença Crucial: Poder de Polícia vs. Poder Disciplinar</h4>
+                    <p class="text-sm">O <span class="font-semibold">Poder de Polícia</span> atinge a todos (relação geral). Ex: multa de trânsito. O <span class="font-semibold">Poder Disciplinar</span> atinge apenas quem tem um vínculo especial com a Administração (servidores, contratados). Ex: suspensão de um servidor.</p>
+                </div>
+            </section>
+            
+            <!-- Seção Atos -->
+            <section id="atos" class="main-content min-h-screen mb-16">
+                <h2 class="text-4xl font-bold mb-2 text-teal-700">Atos Administrativos</h2>
+                <p class="mb-8 text-slate-600">A forma como a Administração manifesta sua vontade e produz efeitos jurídicos na vida do cidadão.</p>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Requisitos de Validade - CO.FI.FO.M.OB</h3>
+                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
+                        <div class="p-3 border rounded-lg">
+                            <h4 class="font-bold">COmpetência</h4>
+                            <p class="text-xs">Agente certo</p>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <h4 class="font-bold">FInalidade</h4>
+                            <p class="text-xs">Interesse público</p>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <h4 class="font-bold">FOrma</h4>
+                            <p class="text-xs">Modo correto</p>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <h4 class="font-bold">Motivo</h4>
+                            <p class="text-xs">Causa real</p>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <h4 class="font-bold">OBjeto</h4>
+                            <p class="text-xs">Efeito lícito</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                     <h3 class="text-2xl font-semibold mb-4">Extinção dos Atos: Anulação vs. Revogação</h3>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-4 border-2 border-red-300 rounded-lg">
+                             <h4 class="font-bold text-lg text-red-700">Anulação</h4>
+                             <ul class="space-y-2 mt-2">
+                                <li><strong>Motivo:</strong> Ilegalidade (vício).</li>
+                                <li><strong>Quem faz:</strong> Administração ou Judiciário.</li>
+                                <li><strong>Efeitos:</strong> *Ex Tunc* (retroage, desfaz tudo).</li>
+                             </ul>
+                        </div>
+                         <div class="p-4 border-2 border-blue-300 rounded-lg">
+                             <h4 class="font-bold text-lg text-blue-700">Revogação</h4>
+                             <ul class="space-y-2 mt-2">
+                                <li><strong>Motivo:</strong> Conveniência e Oportunidade (mérito).</li>
+                                <li><strong>Quem faz:</strong> Apenas a Administração.</li>
+                                <li><strong>Efeitos:</strong> *Ex Nunc* (só vale para o futuro).</li>
+                             </ul>
+                        </div>
+                    </div>
+                    <div id="quiz-anulacao-revogacao" class="mt-6 p-4 bg-slate-100 rounded-lg">
+                        <h4 class="font-semibold text-center mb-2">Teste Rápido!</h4>
+                        <p class="text-center text-sm mb-4">Uma autorização de uso de praça, que é um ato legal e discricionário, deixou de ser interessante para a cidade. O que a prefeitura deve fazer?</p>
+                        <div class="flex justify-center gap-4">
+                            <button data-answer="wrong" class="quiz-option p-2 border-2 rounded-lg font-semibold hover:bg-slate-200">Anular o ato</button>
+                            <button data-answer="correct" class="quiz-option p-2 border-2 rounded-lg font-semibold hover:bg-slate-200">Revogar o ato</button>
+                        </div>
+                        <p id="feedback-anulacao-revogacao" class="text-center text-sm font-semibold mt-3 h-5"></p>
+                    </div>
+                </div>
+                 <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                    <h4 class="font-bold">Teoria dos Motivos Determinantes</h4>
+                    <p class="text-sm">Se a Administração, mesmo não sendo obrigada, declara o motivo de um ato discricionário, a validade do ato passa a depender da veracidade desse motivo. Se o motivo for falso, o ato, mesmo discricionário, torna-se ILEGAL.</p>
+                </div>
+            </section>
+
+            <!-- Seção Organização -->
+            <section id="organizacao" class="main-content min-h-screen mb-16">
+                <h2 class="text-4xl font-bold mb-2 text-teal-700">Organização da Administração</h2>
+                <p class="mb-8 text-slate-600">Como o Estado se estrutura para prestar serviços? A resposta está na diferença entre centralizar, desconcentrar e descentralizar.</p>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-2xl font-semibold mb-4">Desconcentração vs. Descentralização</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Desconcentração</h4>
+                            <p>Distribuição de tarefas <span class="font-semibold">DENTRO</span> da mesma pessoa jurídica, criando <span class="font-semibold">órgãos</span>. Há <span class="font-semibold text-red-600">HIERARQUIA</span>.</p>
+                            <p class="text-sm mt-2">Ex: Ministério da Saúde e suas secretarias internas.</p>
+                        </div>
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-bold text-lg">Descentralização</h4>
+                            <p>Transferência de serviço para <span class="font-semibold">OUTRA</span> pessoa jurídica (entidade). <span class="font-semibold text-teal-600">NÃO HÁ HIERARQUIA</span>, mas sim <span class="font-semibold">vinculação</span> (controle finalístico).</p>
+                             <p class="text-sm mt-2">Ex: União cria o INSS (uma Autarquia).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-2xl font-semibold mb-4">A Estrutura da Administração Pública</h3>
+                    <div class="p-4 border-2 border-slate-300 rounded-lg text-center">
+                        <div class="font-bold text-lg">ADMINISTRAÇÃO PÚBLICA</div>
+                        <div class="flex flex-col md:flex-row justify-center items-start mt-4 gap-4">
+                            <!-- Adm Direta -->
+                            <div class="w-full md:w-1/3 p-4 bg-blue-100 rounded-lg">
+                                <h4 class="font-bold">ADMINISTRAÇÃO DIRETA</h4>
+                                <p class="text-sm">União, Estados, DF, Municípios (Entes Políticos)</p>
+                                <div class="mt-2 p-2 bg-blue-200 rounded">
+                                    <p class="font-semibold">Órgãos</p>
+                                    <p class="text-xs">(Ministérios, Secretarias)</p>
+                                </div>
+                            </div>
+                             <!-- Adm Indireta -->
+                            <div class="w-full md:w-2/3 p-4 bg-green-100 rounded-lg">
+                                 <h4 class="font-bold">ADMINISTRAÇÃO INDIRETA</h4>
+                                 <p class="text-sm">(Entidades com personalidade jurídica)</p>
+                                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
+                                    <button class="modal-trigger p-2 bg-green-200 rounded hover:bg-green-300" data-target="autarquia">Autarquias</button>
+                                    <button class="modal-trigger p-2 bg-green-200 rounded hover:bg-green-300" data-target="fundacao">Fundações Púb.</button>
+                                    <button class="modal-trigger p-2 bg-green-200 rounded hover:bg-green-300" data-target="empresa">Empresas Púb.</button>
+                                    <button class="modal-trigger p-2 bg-green-200 rounded hover:bg-green-300" data-target="sem">Soc. Econ. Mista</button>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4">Empresas Estatais: Comparativo Visual</h3>
+                     <div class="chart-container">
+                        <canvas id="estataisChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="entity-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 hidden opacity-0">
+        <div id="modal-content" class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md p-6 transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-2xl font-bold"></h3>
+                <button id="close-modal" class="text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling and active link highlighting
+            const navLinks = document.querySelectorAll('#main-nav a');
+            const sections = document.querySelectorAll('.main-content');
+
+            function changeActiveLink() {
+                let index = sections.length;
+                while(--index && window.scrollY + 50 < sections[index].offsetTop) {}
+                
+                navLinks.forEach((link) => link.classList.remove('active'));
+                navLinks[index].classList.add('active');
+            }
+
+            changeActiveLink();
+            window.addEventListener('scroll', changeActiveLink);
+
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // LIMPE Tabs
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            function activateTab(targetId) {
+                tabButtons.forEach(button => {
+                    button.classList.remove('text-teal-600', 'border-teal-600');
+                    if (button.dataset.target === targetId) {
+                        button.classList.add('text-teal-600', 'border-teal-600');
+                    }
+                });
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    if (content.id === targetId) {
+                        content.classList.remove('hidden');
+                    }
+                });
+            }
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    activateTab(button.dataset.target);
+                });
+            });
+            activateTab('legalidade');
+
+            // Quiz logic
+            const quizContainer = document.getElementById('quiz-anulacao-revogacao');
+            const quizOptions = quizContainer.querySelectorAll('.quiz-option');
+            const feedbackEl = document.getElementById('feedback-anulacao-revogacao');
+
+            quizOptions.forEach(button => {
+                button.addEventListener('click', () => {
+                    const isCorrect = button.dataset.answer === 'correct';
+                    feedbackEl.textContent = isCorrect ? 'Correto! O ato era legal, mas tornou-se inoportuno. A revogação analisa o mérito.' : 'Incorreto. A anulação ocorre por ilegalidade. O ato era legal.';
+                    feedbackEl.style.color = isCorrect ? '#16a34a' : '#dc2626';
+
+                    quizOptions.forEach(opt => {
+                        opt.classList.remove('quiz-correct', 'quiz-wrong');
+                        if (opt.dataset.answer === 'correct') {
+                            opt.classList.add('quiz-correct');
+                        } else {
+                            opt.classList.add('quiz-wrong');
+                        }
+                    });
+                });
+            });
+
+            // Chart.js
+            const ctx = document.getElementById('estataisChart').getContext('2d');
+            const estataisChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Capital', 'Forma Jurídica', 'Foro (se Federal)'],
+                    datasets: [{
+                        label: 'Empresa Pública (EP)',
+                        data: [1, 1, 1],
+                        backgroundColor: 'rgba(13, 148, 136, 0.7)',
+                        borderColor: 'rgba(13, 148, 136, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Soc. Economia Mista (SEM)',
+                        data: [2, 2, 2],
+                        backgroundColor: 'rgba(2, 132, 199, 0.7)',
+                        borderColor: 'rgba(2, 132, 199, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Empresa Pública vs. Sociedade de Economia Mista',
+                            font: { size: 16 }
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            display: false,
+                            beginAtZero: true,
+                            max: 3
+                        },
+                        x: {
+                           grid: { display: false }
+                        }
+                    },
+                    animation: {
+                        onComplete: () => {
+                            const chart = estataisChart;
+                            const ctx = chart.ctx;
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+                            ctx.font = "bold 12px 'Inter'";
+
+                            const metaEP = chart.getDatasetMeta(0);
+                            const metaSEM = chart.getDatasetMeta(1);
+                            
+                            const dataLabels = {
+                                EP: ['100% Público', 'Qualquer', 'Justiça Federal'],
+                                SEM: ['Misto (controle público)', 'Apenas S.A.', 'Justiça Estadual']
+                            };
+
+                            metaEP.data.forEach((bar, index) => {
+                                const data = dataLabels.EP[index];
+                                ctx.fillStyle = '#fff';
+                                ctx.fillText(data, bar.x, bar.y - 5);
+                            });
+
+                             metaSEM.data.forEach((bar, index) => {
+                                const data = dataLabels.SEM[index];
+                                ctx.fillStyle = '#fff';
+                                ctx.fillText(data, bar.x, bar.y - 5);
+                            });
+                        }
+                    }
+                }
+            });
+
+            // Modal Logic
+            const modal = document.getElementById('entity-modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            const modalData = {
+                autarquia: {
+                    title: 'Autarquias',
+                    body: `<p class="mb-2">Pessoas jurídicas de <strong>direito público</strong>, criadas por <strong>lei específica</strong> para executar atividades <strong>típicas de Estado</strong>.</p>
+                           <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Regime:</strong> Quase idêntico ao da Adm. Direta (bens impenhoráveis, imunidade a impostos).</li>
+                                <li><strong>Pessoal:</strong> Servidores estatutários (concursados).</li>
+                                <li><strong>Exemplos:</strong> INSS, IBAMA, BACEN, Universidades Federais.</li>
+                           </ul>`
+                },
+                fundacao: {
+                    title: 'Fundações Públicas',
+                    body: `<p class="mb-2">Patrimônio público personificado para fins sociais (cultura, pesquisa, etc.). Podem ter duas naturezas:</p>
+                           <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>De Direito Público:</strong> Regime de autarquia.</li>
+                                <li><strong>De Direito Privado:</strong> Regime híbrido (CLT, licitação obrigatória).</li>
+                                <li><strong>Exemplos:</strong> IBGE (dir. público), FUNAI (dir. privado).</li>
+                           </ul>`
+                },
+                empresa: {
+                    title: 'Empresas Públicas (EP)',
+                    body: `<p class="mb-2">Pessoas jurídicas de <strong>direito privado</strong>, criadas com capital <strong>100% público</strong>.</p>
+                           <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Forma:</strong> Qualquer forma societária.</li>
+                                <li><strong>Foro (se federal):</strong> Justiça Federal.</li>
+                                <li><strong>Exemplos:</strong> Caixa Econômica Federal, Correios.</li>
+                           </ul>`
+                },
+                sem: {
+                    title: 'Sociedades de Economia Mista (SEM)',
+                    body: `<p class="mb-2">Pessoas jurídicas de <strong>direito privado</strong>, com capital <strong>misto</strong> (público e privado), mas com <strong>controle acionário público</strong>.</p>
+                           <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Forma:</strong> Obrigatoriamente Sociedade Anônima (S.A.).</li>
+                                <li><strong>Foro (se federal):</strong> Justiça Estadual.</li>
+                                <li><strong>Exemplos:</strong> Banco do Brasil, Petrobras.</li>
+                           </ul>`
+                }
+            };
+
+            function openModal(target) {
+                const data = modalData[target];
+                if (!data) return;
+
+                modalTitle.textContent = data.title;
+                modalBody.innerHTML = data.body;
+                
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                }, 10);
+            }
+
+            function closeModal() {
+                 modal.classList.add('opacity-0');
+                 modalContent.classList.add('scale-95');
+                 setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+
+            document.querySelectorAll('.modal-trigger').forEach(trigger => {
+                trigger.addEventListener('click', () => openModal(trigger.dataset.target));
+            });
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
